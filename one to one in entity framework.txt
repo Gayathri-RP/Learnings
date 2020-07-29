@@ -1,0 +1,52 @@
+One to One Relationship in Entity Framework
+
+public class student
+{
+public int studentID {get, set ;}
+public string  studentName {get, set ;}
+
+public studentAddress  Address {get, set ;}
+}
+
+public class studentAddress
+{
+public int studentAddressID {get, set;}
+public string Address1 {get, set;} 
+public string Address2 {get, set;}
+public string City {get, set;}
+public int Zipcode {get, set;}
+public string State {get, set;}
+public string Country {get, set;}
+
+public int AddressofstudentId {get, set;}
+public student student {get, set;}
+}
+
+
+public class SchoolContext : DbContext
+{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=EFCore-SchoolDB;Trusted_Connection=True");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Student>()
+            .HasOne<StudentAddress>(s => s.Address)
+            .WithOne(ad => ad.Student)
+            .HasForeignKey<StudentAddress>(ad => ad.AddressOfStudentId);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
